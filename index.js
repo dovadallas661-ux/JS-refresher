@@ -21,6 +21,7 @@ Challenge:
   ⚠️ You will need to write code here in index.js and in
    fakeStockAPI.js.
 */
+import { getStockData } from "./fakeStockAPI.js";
 
 let previousPrice = null;
 
