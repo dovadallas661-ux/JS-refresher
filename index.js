@@ -22,11 +22,39 @@ Challenge:
    fakeStockAPI.js.
 */
 
+let previousPrice = null;
+
 function renderStockTicker(stockData) {
-    const stockDisplayName = document.getElementById('name')
-    const stockDisplaySymbol = document.getElementById('symbol')
-    const stockDisplayPrice = document.getElementById('price')
-    const stockDisplayPriceIcon = document.getElementById('price-icon')
-    const stockDisplayTime = document.getElementById('time')
+    const stockDisplayName = document.getElementById('name');
+    const stockDisplaySymbol = document.getElementById('symbol');
+    const stockDisplayPrice = document.getElementById('price');
+    const stockDisplayPriceIcon = document.getElementById('price-icon');
+    const stockDisplayTime = document.getElementById('time');
+
+    stockDisplayName.textContent = stockData.name;
+    stockDisplaySymbol.textContent = stockData.sym;
+    stockDisplayPrice.textContent = stockData.price;
+    stockDisplayTime.textContent = stockData.time;
+
+    if (previousPrice !== null) {
+        if (stockData.price > previousPrice) {
+            stockDisplayPriceIcon.textContent = "▲";
+            stockDisplayPriceIcon.style.color = "green";
+        } else if (stockData.price < previousPrice) {
+            stockDisplayPriceIcon.textContent = "▼";
+            stockDisplayPriceIcon.style.color = "red";
+        } else {
+            stockDisplayPriceIcon.textContent = "▶";
+            stockDisplayPriceIcon.style.color = "gray";
+        }
+    }
+
+    previousPrice = stockData.price;
 }
 
+setInterval(() => {
+    const stockData = getStockData();
+    renderStockTicker(stockData);
+}, 1500);
+
+price: Number((Math.random() * 3).toFixed(2))
